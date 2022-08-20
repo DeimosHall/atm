@@ -6,7 +6,7 @@ pub fn menu(account: &mut Account) {
         let option: u8 = get_option();
 
         match option {
-            //1 => deposit(&account),
+            1 => deposit(account),
             2 => withdraw(account),
             3 => consult(account),
             _ => break,
@@ -14,23 +14,31 @@ pub fn menu(account: &mut Account) {
     }
 }
 
-fn withdraw(account: &mut Account) {
-    let amount: i32 = loop {
-        println!("Enter amount to withdraw:");
+fn parse_input_to_i32(variable_name: &str, label: &str) -> i32 {
+    let msg: String = format!("Error reading {}", variable_name);
+    let msg: &str = &msg[..];
 
-        let mut amount = String::new();
-        io::stdin().read_line(&mut amount).expect("Error reading amount");
+    return loop {
+        println!("{label}");
 
-        match amount.trim().parse::<i32>() {
-            Ok(value) => {
-                break value;
-            },
-            Err(value) => {
-                invalid_option(value.to_string());
-                continue;
-            },
+        let mut string = String::new();
+        io::stdin().read_line(&mut string).expect(msg);
+
+        match string.trim().parse::<i32>() {
+            Ok(value) => break value,
+            Err(value) => invalid_option(value.to_string()),
         };
     };
+}
+
+fn deposit(account: &mut Account) {
+    let amount: i32 = parse_input_to_i32("amount", "Enter amount to deposit");
+
+    account.deposit(amount);
+}
+
+fn withdraw(account: &mut Account) {
+    let amount: i32 = parse_input_to_i32("amount", "Enter amount to withdraw:");
 
     if amount >= 0 && amount <= account.amount() {
         account.withdraw(amount);
