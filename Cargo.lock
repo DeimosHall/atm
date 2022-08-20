@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "cashier"
+name = "atm"
 version = "0.1.0"
