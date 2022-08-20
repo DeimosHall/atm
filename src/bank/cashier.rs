@@ -35,6 +35,7 @@ fn deposit(account: &mut Account) {
     let amount: i32 = parse_input_to_i32("amount", "Enter amount to deposit");
 
     account.deposit(amount);
+    consult(account);
 }
 
 fn withdraw(account: &mut Account) {
@@ -45,10 +46,22 @@ fn withdraw(account: &mut Account) {
     } else {
         invalid_option(amount.to_string());
     }
+
+    consult(account);
 }
 
 fn consult(account: &mut Account) {
+    show_decoration();
     println!("Balance: {}", account.amount());
+    click_enter_to_continue();
+}
+
+fn click_enter_to_continue() {
+    println!("Click enter to continue...");
+    let mut click = String::new();
+    io::stdin()
+        .read_line(&mut click)
+        .expect("Error waiting to continue");
 }
 
 fn show_decoration() {
@@ -88,7 +101,7 @@ fn get_option() -> u8 {
 
         match option {
             1 | 2 | 3 | 4 => {
-                show_decoration();
+                //show_decoration();
                 break option;
             }
             _ => {
