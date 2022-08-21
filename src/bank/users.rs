@@ -13,15 +13,11 @@ impl Account {
         self.amount
     }
 
+    pub fn set_amount(&mut self, amount: i32) {
+        self.amount = amount;
+    }
+
     pub fn owner(&self) -> String {
         self.owner.clone()
-    }
-
-    pub fn deposit(&mut self, amount: i32) {
-        self.amount += amount;
-    }
-
-    pub fn withdraw(&mut self, amount: i32) {
-        self.amount -= amount;
     }
 }
